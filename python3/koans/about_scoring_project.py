@@ -32,9 +32,46 @@ from runner.koan import *
 #
 # Your goal is to write the score method.
 
+def sum_previous(previous):
+    total = 0
+
+    for num in previous:
+        if num == 1:
+            total += 100
+        elif num == 5:
+            total += 50
+
+    return total
+            
+    
 def score(dice):
-    # You need to write this method
-    pass
+    total = 0
+    counts = {}
+
+    for x in dice:
+        counts[x] = 1 if x not in counts else counts[x] + 1
+
+    if 1 in counts:
+        if counts[1] >= 3:
+            total += 1000
+        total += counts[1] % 3 * 100
+        del counts[1]
+
+    for x in counts:
+        if counts[x] >= 3:
+            total += x * 100
+        if x == 5:
+            total += counts[x] % 3 * 50
+
+    return total
+
+
+
+
+
+
+        
+    
 
 class AboutScoringProject(Koan):
     def test_score_of_an_empty_list_is_zero(self):
